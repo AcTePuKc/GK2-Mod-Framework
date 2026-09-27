@@ -1,5 +1,6 @@
 {
   "common.back": "返回",
+  "common.cancel": "取消",
   "common.disable": "禁用",
   "common.enable": "启用",
   "common.no": "否",
@@ -33,6 +34,10 @@
   "mods.runtime.external": "由模组管理",
   "mods.runtime.live": "即时切换",
   "mods.runtime.restart": "需要重启",
+  "mods.restart.quit_to_apply": "退出以应用更改",
+  "mods.restart.confirm_title": "退出游戏？",
+  "mods.restart.confirm_body": "游戏将关闭且不会保存。未保存的进度可能会丢失。待处理的模组更改将在下次启动时生效；请在云同步完成后通过游戏平台重新启动游戏。",
+  "mods.restart.quit": "退出游戏",
   "mods.settings": "设置",
   "mods.state.error": "错误",
   "mods.state.off": "关闭",

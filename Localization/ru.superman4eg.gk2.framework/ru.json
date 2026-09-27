@@ -1,5 +1,6 @@
 {
   "common.back": "Назад",
+  "common.cancel": "Отмена",
   "common.disable": "Отключить",
   "common.enable": "Включить",
   "common.no": "Нет",
@@ -33,6 +34,10 @@
   "mods.runtime.external": "Управляется модом",
   "mods.runtime.live": "Мгновенное переключение",
   "mods.runtime.restart": "Требуется перезапуск",
+  "mods.restart.quit_to_apply": "Выйти для применения",
+  "mods.restart.confirm_title": "Выйти из игры?",
+  "mods.restart.confirm_body": "Игра закроется без сохранения. Несохранённый прогресс может быть потерян. Изменения модов применятся при следующем запуске; запустите игру через лаунчер после облачной синхронизации.",
+  "mods.restart.quit": "Выйти из игры",
   "mods.settings": "Настройки",
   "mods.state.error": "ОШИБКА",
   "mods.state.off": "ВЫКЛ",

@@ -1,5 +1,6 @@
 {
   "common.back": "Назад",
+  "common.cancel": "Отказ",
   "common.disable": "Изключване",
   "common.enable": "Включване",
   "common.no": "Не",
@@ -33,6 +34,10 @@
   "mods.runtime.external": "Управлява се от мода",
   "mods.runtime.live": "Превключване на живо",
   "mods.runtime.restart": "Изисква се рестартиране",
+  "mods.restart.quit_to_apply": "Изход за прилагане",
+  "mods.restart.confirm_title": "Изход от играта?",
+  "mods.restart.confirm_body": "Играта ще се затвори без запис. Незапазеният прогрес може да бъде загубен. Промените по модовете ще се приложат при следващото стартиране; стартирайте играта от launcher-а след облачната синхронизация.",
+  "mods.restart.quit": "Изход от играта",
   "mods.settings": "Настройки",
   "mods.state.error": "ГРЕШКА",
   "mods.state.off": "ИЗКЛ.",

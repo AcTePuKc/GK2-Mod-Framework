@@ -1,5 +1,6 @@
 {
   "common.back": "뒤로",
+  "common.cancel": "취소",
   "common.disable": "비활성화",
   "common.enable": "활성화",
   "common.no": "아니요",
@@ -33,6 +34,10 @@
   "mods.runtime.external": "모드에서 관리",
   "mods.runtime.live": "즉시 전환",
   "mods.runtime.restart": "재시작 필요",
+  "mods.restart.quit_to_apply": "적용 후 종료",
+  "mods.restart.confirm_title": "게임을 종료할까요?",
+  "mods.restart.confirm_body": "게임이 저장 없이 종료됩니다. 저장되지 않은 진행 상황을 잃을 수 있습니다. 대기 중인 모드 변경 사항은 다음 실행 시 적용됩니다. 클라우드 동기화가 끝나면 게임 런처에서 다시 실행하세요.",
+  "mods.restart.quit": "게임 종료",
   "mods.settings": "설정",
   "mods.state.error": "오류",
   "mods.state.off": "꺼짐",

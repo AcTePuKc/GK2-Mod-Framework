@@ -23,6 +23,9 @@ namespace GK2.Framework
         private ModsMenuDetails details;
         private ModsMenuSettingsPage settingsPage;
         private LazyButton frameworkSettingsButton;
+        private LazyButton quitToApplyButton;
+        private GameObject restartConfirmation;
+        private GamepadNavigationItem restartReturnFocus;
         private RegisteredMod selected;
         private GamepadNavigationItem settingsReturnFocus;
         private string builtLanguage;
@@ -237,6 +240,15 @@ namespace GK2.Framework
                 new Vector2(0.5f, 0f));
             FrameworkUi.ApplyDialogButton(closeButton);
 
+            quitToApplyButton = FrameworkUi.CreateButton(
+                "QuitToApply", panelRect, template,
+                FrameworkUi.L("mods.restart.quit_to_apply", "Quit to apply"),
+                new Vector2(-218f, 12f), new Vector2(-58f, 38f),
+                new Vector2(0.5f, 0f), new Vector2(0.5f, 0f));
+            FrameworkUi.ApplyDialogButton(quitToApplyButton);
+            quitToApplyButton.onClick.AddListener(ShowRestartConfirmation);
+            quitToApplyButton.SetCallbacksIntoGamepadNavigationItem();
+
             mainPage = new GameObject("MainPage");
 
             Image listPanel = FrameworkUi.CreateImage(
@@ -278,6 +290,9 @@ namespace GK2.Framework
             frameworkSettingsButton.onClick.AddListener(OpenFrameworkSettingsPage);
             frameworkSettingsButton.SetCallbacksIntoGamepadNavigationItem();
             frameworkSettingsButton.transform.SetParent(mainPage.transform, true);
+            quitToApplyButton.transform.SetParent(mainPage.transform, true);
+
+            BuildRestartConfirmation(template, root);
 
             modList = new ModsMenuModList(listPanel, Select);
             details = new ModsMenuDetails(detailPanel, template, ToggleSelected, OpenSettingsPage);
@@ -298,6 +313,7 @@ namespace GK2.Framework
             ApplyResponsiveScale(force: true);
             base.Open(data);
             RefreshMods();
+            RefreshRestartAction();
             RefreshGamepadNavigation();
         }
 
@@ -320,6 +336,12 @@ namespace GK2.Framework
 
         protected override bool OnPressedBack()
         {
+            if (restartConfirmation != null && restartConfirmation.activeSelf)
+            {
+                HideRestartConfirmation();
+                return true;
+            }
+
             if (settingsPage.IsCapturingKeybind)
             {
                 settingsPage.CancelKeybindCapture(true);
@@ -386,6 +408,107 @@ namespace GK2.Framework
 
             modList.RefreshStates();
             Select(selected);
+            RefreshRestartAction();
+        }
+
+        private void RefreshRestartAction()
+        {
+            if (quitToApplyButton == null) return;
+            bool pendingRestart = false;
+            foreach (RegisteredMod mod in FrameworkApi.Mods)
+            {
+                if (mod.HasPendingRestart)
+                {
+                    pendingRestart = true;
+                    break;
+                }
+            }
+
+            // Quitting from the pause menu could discard unsaved gameplay progress.
+            quitToApplyButton.gameObject.SetActive(
+                pendingRestart && !(returnWindow is UIGamePauseWindow));
+        }
+
+        private void BuildRestartConfirmation(LazyButton template, Transform root)
+        {
+            restartConfirmation = new GameObject("RestartConfirmation", typeof(RectTransform));
+            restartConfirmation.transform.SetParent(root, false);
+            RectTransform overlayRect = (RectTransform)restartConfirmation.transform;
+            FrameworkUi.Stretch(overlayRect);
+            Image overlay = restartConfirmation.AddComponent<Image>();
+            overlay.color = new Color(0f, 0f, 0f, 0.72f);
+
+            Image dialog = FrameworkUi.CreateImage(
+                "Dialog", overlayRect,
+                NativeUiSkin.IsReady ? new Color(0.105f, 0.112f, 0.14f, 1f) : new Color(0.12f, 0.07f, 0.055f, 1f));
+            RectTransform dialogRect = dialog.rectTransform;
+            dialogRect.anchorMin = dialogRect.anchorMax = new Vector2(0.5f, 0.5f);
+            dialogRect.sizeDelta = new Vector2(520f, 190f);
+            if (NativeUiSkin.IsReady) FrameworkUi.ApplyFrame(dialog);
+
+            TextMeshProUGUI title = FrameworkUi.CreateText(
+                "Title", dialogRect, 20f, TextAlignmentOptions.Center, Color.white);
+            FrameworkUi.ApplyHeaderText(title);
+            title.text = FrameworkUi.L("mods.restart.confirm_title", "Quit game?");
+            FrameworkUi.SetRect(title.rectTransform, new Vector2(16f, -48f), new Vector2(-16f, -14f), new Vector2(0f, 1f), Vector2.one);
+
+            TextMeshProUGUI message = FrameworkUi.CreateText(
+                "Message", dialogRect, 16f, TextAlignmentOptions.Center, Color.white);
+            FrameworkUi.ApplyLabelText(message);
+            message.text = FrameworkUi.L(
+                "mods.restart.confirm_body",
+                "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch; relaunch from your game launcher after cloud sync finishes.");
+            message.textWrappingMode = TextWrappingModes.Normal;
+            FrameworkUi.SetRect(message.rectTransform, new Vector2(22f, 64f), new Vector2(-22f, -58f), Vector2.zero, Vector2.one);
+
+            LazyButton cancel = FrameworkUi.CreateButton(
+                "Cancel", dialogRect, template, FrameworkUi.L("common.cancel", "Cancel"),
+                new Vector2(-175f, 14f), new Vector2(-10f, 46f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f));
+            FrameworkUi.ApplyDialogButton(cancel);
+            cancel.onClick.AddListener(HideRestartConfirmation);
+            cancel.SetCallbacksIntoGamepadNavigationItem();
+
+            LazyButton quit = FrameworkUi.CreateButton(
+                "Quit", dialogRect, template, FrameworkUi.L("mods.restart.quit", "Quit game"),
+                new Vector2(10f, 14f), new Vector2(175f, 46f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f));
+            FrameworkUi.ApplyDialogButton(quit);
+            quit.onClick.AddListener(QuitToApply);
+            quit.SetCallbacksIntoGamepadNavigationItem();
+            GamepadNavigationItem cancelNavigation = cancel.GetComponent<GamepadNavigationItem>();
+            GamepadNavigationItem quitNavigation = quit.GetComponent<GamepadNavigationItem>();
+            cancelNavigation?.SetCustomDirectionItem(GUIDirection.Right, quitNavigation);
+            quitNavigation?.SetCustomDirectionItem(GUIDirection.Left, cancelNavigation);
+            restartConfirmation.SetActive(false);
+        }
+
+        private void ShowRestartConfirmation()
+        {
+            RefreshRestartAction();
+            if (!quitToApplyButton.gameObject.activeSelf) return;
+            if (LazyInput.IsGamepadActive)
+                restartReturnFocus = GetComponent<GamepadNavigationController>()?.FocusedItem;
+            mainPage.SetActive(false);
+            if (closeButton != null) closeButton.gameObject.SetActive(false);
+            restartConfirmation.SetActive(true);
+            RefreshGamepadNavigation();
+        }
+
+        private void HideRestartConfirmation()
+        {
+            restartConfirmation.SetActive(false);
+            mainPage.SetActive(true);
+            if (closeButton != null) closeButton.gameObject.SetActive(!LazyInput.IsGamepadActive);
+            GamepadNavigationItem focus = restartReturnFocus;
+            restartReturnFocus = null;
+            RefreshGamepadNavigation(focus);
+        }
+
+        private void QuitToApply()
+        {
+            RefreshRestartAction();
+            if (!quitToApplyButton.gameObject.activeSelf) return;
+            FrameworkLog.Source?.LogInfo("GK2_QUIT_TO_APPLY_REQUESTED");
+            Application.Quit();
         }
 
         private void OpenSettingsPage()
