@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Added a localized, confirmation-protected “Quit to apply” action in the Framework Mods window when a mod has pending restart-required enablement changes. The action is hidden when no restart is pending and while the Mods window was opened from the pause menu; players relaunch manually through their game launcher after cloud synchronization.
+- Added a localized, confirmation-protected “Quit to apply” action in the Framework Mods window when a mod has pending restart-required enablement changes. It is available from both the main menu and pause menu; the confirmation text differs by context so in-game players are warned that the game will not save and unsaved progress may be lost. Players relaunch manually through their game launcher after cloud synchronization.
 
 ## 0.1.14 — 2026-09-26
 

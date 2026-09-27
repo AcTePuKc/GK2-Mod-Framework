@@ -25,6 +25,7 @@ namespace GK2.Framework
         private LazyButton frameworkSettingsButton;
         private LazyButton quitToApplyButton;
         private GameObject restartConfirmation;
+        private TextMeshProUGUI restartConfirmationMessage;
         private GamepadNavigationItem restartReturnFocus;
         private RegisteredMod selected;
         private GamepadNavigationItem settingsReturnFocus;
@@ -314,6 +315,7 @@ namespace GK2.Framework
             base.Open(data);
             RefreshMods();
             RefreshRestartAction();
+            RefreshRestartConfirmationMessage();
             RefreshGamepadNavigation();
         }
 
@@ -424,9 +426,20 @@ namespace GK2.Framework
                 }
             }
 
-            // Quitting from the pause menu could discard unsaved gameplay progress.
-            quitToApplyButton.gameObject.SetActive(
-                pendingRestart && !(returnWindow is UIGamePauseWindow));
+            quitToApplyButton.gameObject.SetActive(pendingRestart);
+        }
+
+        private void RefreshRestartConfirmationMessage()
+        {
+            if (restartConfirmationMessage == null) return;
+            bool inGame = returnWindow is UIGamePauseWindow;
+            restartConfirmationMessage.text = inGame
+                ? FrameworkUi.L(
+                    "mods.restart.confirm_body_in_game",
+                    "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch. Relaunch from your usual platform after cloud sync finishes.")
+                : FrameworkUi.L(
+                    "mods.restart.confirm_body_main_menu",
+                    "The game will close. Pending mod changes apply next time you launch. Relaunch from your usual platform after cloud sync finishes.");
         }
 
         private void BuildRestartConfirmation(LazyButton template, Transform root)
@@ -452,14 +465,12 @@ namespace GK2.Framework
             title.text = FrameworkUi.L("mods.restart.confirm_title", "Quit game?");
             FrameworkUi.SetRect(title.rectTransform, new Vector2(16f, -48f), new Vector2(-16f, -14f), new Vector2(0f, 1f), Vector2.one);
 
-            TextMeshProUGUI message = FrameworkUi.CreateText(
+            restartConfirmationMessage = FrameworkUi.CreateText(
                 "Message", dialogRect, 16f, TextAlignmentOptions.Center, Color.white);
-            FrameworkUi.ApplyLabelText(message);
-            message.text = FrameworkUi.L(
-                "mods.restart.confirm_body",
-                "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch. Relaunch from the platform you normally use to start the game after cloud sync finishes.");
-            message.textWrappingMode = TextWrappingModes.Normal;
-            FrameworkUi.SetRect(message.rectTransform, new Vector2(22f, 64f), new Vector2(-22f, -58f), Vector2.zero, Vector2.one);
+            FrameworkUi.ApplyLabelText(restartConfirmationMessage);
+            restartConfirmationMessage.textWrappingMode = TextWrappingModes.Normal;
+            FrameworkUi.SetRect(restartConfirmationMessage.rectTransform, new Vector2(22f, 64f), new Vector2(-22f, -58f), Vector2.zero, Vector2.one);
+            RefreshRestartConfirmationMessage();
 
             LazyButton cancel = FrameworkUi.CreateButton(
                 "Cancel", dialogRect, template, FrameworkUi.L("common.cancel", "Cancel"),
@@ -485,6 +496,7 @@ namespace GK2.Framework
         {
             RefreshRestartAction();
             if (!quitToApplyButton.gameObject.activeSelf) return;
+            RefreshRestartConfirmationMessage();
             if (LazyInput.IsGamepadActive)
                 restartReturnFocus = GetComponent<GamepadNavigationController>()?.FocusedItem;
             mainPage.SetActive(false);
