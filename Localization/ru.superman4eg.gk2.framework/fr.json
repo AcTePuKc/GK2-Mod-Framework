@@ -36,7 +36,7 @@
   "mods.runtime.restart": "Redémarrage requis",
   "mods.restart.quit_to_apply": "Quitter pour appliquer",
   "mods.restart.confirm_title": "Quitter le jeu ?",
-  "mods.restart.confirm_body": "Le jeu se fermera sans sauvegarder. Toute progression non enregistrée peut être perdue. Les changements de mods seront appliqués au prochain lancement ; relancez le jeu depuis votre plateforme après la synchronisation cloud.",
+  "mods.restart.confirm_body": "Le jeu se fermera sans sauvegarder. Toute progression non enregistrée peut être perdue. Les changements de mods seront appliqués au prochain lancement. Relancez le jeu depuis la plateforme que vous utilisez habituellement après la synchronisation cloud.",
   "mods.restart.quit": "Quitter le jeu",
   "mods.settings": "Paramètres",
   "mods.state.error": "ERREUR",

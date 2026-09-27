@@ -36,7 +36,7 @@
   "mods.runtime.restart": "Restart required",
   "mods.restart.quit_to_apply": "Quit to apply",
   "mods.restart.confirm_title": "Quit game?",
-  "mods.restart.confirm_body": "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch; relaunch from your game launcher after cloud sync finishes.",
+  "mods.restart.confirm_body": "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch. Relaunch from the platform you normally use to start the game after cloud sync finishes.",
   "mods.restart.quit": "Quit game",
   "mods.settings": "Settings",
   "mods.state.error": "ERROR",

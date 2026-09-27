@@ -457,7 +457,7 @@ namespace GK2.Framework
             FrameworkUi.ApplyLabelText(message);
             message.text = FrameworkUi.L(
                 "mods.restart.confirm_body",
-                "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch; relaunch from your game launcher after cloud sync finishes.");
+                "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch. Relaunch from the platform you normally use to start the game after cloud sync finishes.");
             message.textWrappingMode = TextWrappingModes.Normal;
             FrameworkUi.SetRect(message.rectTransform, new Vector2(22f, 64f), new Vector2(-22f, -58f), Vector2.zero, Vector2.one);
 
