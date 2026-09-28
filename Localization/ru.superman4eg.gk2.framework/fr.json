@@ -1,5 +1,6 @@
 {
   "common.back": "Retour",
+  "common.cancel": "Annuler",
   "common.disable": "Désactiver",
   "common.enable": "Activer",
   "common.no": "Non",
@@ -33,6 +34,11 @@
   "mods.runtime.external": "Géré par le mod",
   "mods.runtime.live": "Activation en temps réel",
   "mods.runtime.restart": "Redémarrage requis",
+  "mods.restart.quit_to_apply": "Quitter pour appliquer",
+  "mods.restart.confirm_title": "Quitter le jeu ?",
+  "mods.restart.confirm_body_main_menu": "Le jeu va se fermer. Les changements de mods seront appliqués au prochain lancement. Après la synchronisation cloud, relancez le jeu depuis votre plateforme habituelle.",
+  "mods.restart.confirm_body_in_game": "Le jeu se fermera sans sauvegarder. Toute progression non enregistrée peut être perdue. Les changements de mods seront appliqués au prochain lancement. Après la synchronisation cloud, relancez le jeu depuis votre plateforme habituelle.",
+  "mods.restart.quit": "Quitter le jeu",
   "mods.settings": "Paramètres",
   "mods.state.error": "ERREUR",
   "mods.state.off": "DÉSACTIVÉ",

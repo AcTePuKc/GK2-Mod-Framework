@@ -1,5 +1,6 @@
 {
   "common.back": "Back",
+  "common.cancel": "Cancel",
   "common.disable": "Disable",
   "common.enable": "Enable",
   "common.no": "No",
@@ -33,6 +34,11 @@
   "mods.runtime.external": "Managed by mod",
   "mods.runtime.live": "Live toggle",
   "mods.runtime.restart": "Restart required",
+  "mods.restart.quit_to_apply": "Quit to apply",
+  "mods.restart.confirm_title": "Quit game?",
+  "mods.restart.confirm_body_main_menu": "The game will close. Pending mod changes apply next time you launch. Relaunch from your usual platform after cloud sync finishes.",
+  "mods.restart.confirm_body_in_game": "The game will close without saving. Any unsaved progress may be lost. Pending mod changes apply next time you launch. Relaunch from your usual platform after cloud sync finishes.",
+  "mods.restart.quit": "Quit game",
   "mods.settings": "Settings",
   "mods.state.error": "ERROR",
   "mods.state.off": "OFF",

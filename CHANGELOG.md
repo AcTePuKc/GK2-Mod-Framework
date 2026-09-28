@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added a localized, confirmation-protected “Quit to apply” action in the Framework Mods window when a mod has pending restart-required enablement changes. It is available from both the main menu and pause menu; the confirmation text differs by context so in-game players are warned that the game will not save and unsaved progress may be lost. Players relaunch manually through their game launcher after cloud synchronization.
+
 ## 0.1.14 — 2026-09-26
 
 - Fixed the in-game pause-menu Mods button losing the native text outline/material styling. The runtime button now reapplies the exact font, shared material and text color from the native Settings button after localization and on every pause-menu open, matching the already-correct main-menu behavior across languages.
