@@ -303,6 +303,8 @@ namespace GK2.Framework
         public override void Open(LazyWidgetDataBase data)
         {
             settingsPage.HideWithoutLog();
+            if (restartConfirmation != null) restartConfirmation.SetActive(false);
+            restartReturnFocus = null;
             mainPage.SetActive(true);
             if (closeButton != null) closeButton.gameObject.SetActive(true);
 
@@ -364,6 +366,8 @@ namespace GK2.Framework
 
         public override void Close()
         {
+            if (restartConfirmation != null) restartConfirmation.SetActive(false);
+            restartReturnFocus = null;
             LazyWindow<LazyWidgetDataBase> target = returnWindow;
             returnWindow = null;
             bool preservePause = target is UIGamePauseWindow && MainGame.IsGamePaused;
