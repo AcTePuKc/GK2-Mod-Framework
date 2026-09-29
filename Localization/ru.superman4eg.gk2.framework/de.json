@@ -30,6 +30,8 @@
   "mods.next_start": "Beim nächsten Start",
   "mods.none": "Keine im Framework registrierten Mods vorhanden.\n\nEigenständige BepInEx-Mods können weiterhin funktionieren, erscheinen hier aber nur, wenn sie sich direkt beim Framework registrieren oder eine Framework-Anbindung enthalten.",
   "mods.optional": "optional",
+  "mods.report.copy": "Bericht kopieren",
+  "mods.report.copied": "Kopiert",
   "mods.runtime": "Laufzeit",
   "mods.runtime.external": "Vom Mod verwaltet",
   "mods.runtime.live": "Sofort wirksam",

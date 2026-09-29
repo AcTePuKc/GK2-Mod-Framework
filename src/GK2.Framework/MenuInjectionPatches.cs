@@ -221,7 +221,6 @@ namespace GK2.Framework
                     LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
 
                 LogButtonState("CLONE_CONFIGURED", button);
-                window.StartCoroutine(LogAfterLifecycle(window, template, button));
                 FrameworkLog.Source?.LogInfo("GK2_MODS_BUTTON_INJECTED: UIMainMenuWindow");
             }
             catch (Exception ex) { FrameworkLog.Error("Mods button injection failed: " + ex); }
@@ -317,19 +316,6 @@ namespace GK2.Framework
             root.transform.SetParent(template.transform.parent, false);
             root.transform.SetSiblingIndex(template.transform.GetSiblingIndex() + 1);
             return button;
-        }
-
-        private static IEnumerator LogAfterLifecycle(UIMainMenuWindow window, LazyButton template, LazyButton button)
-        {
-            yield return null;
-            if (template != null) LogButtonState("TEMPLATE_AFTER_LIFECYCLE", template);
-            if (button != null)
-            {
-                LogButtonState("CLONE_AFTER_LIFECYCLE", button);
-                TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
-                FrameworkLog.Source?.LogInfo("GK2_MODS_LABEL_FINAL: language=" + LLBase.CurrentLang
-                    + "; text=" + (label == null ? "<missing>" : label.text));
-            }
         }
 
         private static IEnumerator LogAtEndOfFrame(UIMainMenuWindow window, LazyButton template, LazyButton clone)

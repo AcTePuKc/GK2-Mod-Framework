@@ -30,6 +30,8 @@
   "mods.next_start": "Следующий запуск",
   "mods.none": "Нет зарегистрированных модов, интегрированных с Framework.\n\nОбычные BepInEx-моды могут работать как обычно, но появятся здесь только если зарегистрируются напрямую в Framework или используют Framework bridge.",
   "mods.optional": "необязательно",
+  "mods.report.copy": "Копировать отчёт",
+  "mods.report.copied": "Скопировано",
   "mods.runtime": "Во время игры",
   "mods.runtime.external": "Управляется модом",
   "mods.runtime.live": "Мгновенное переключение",

@@ -30,6 +30,8 @@
   "mods.next_start": "Prochain démarrage",
   "mods.none": "Aucun mod intégré au Framework n'est enregistré.\n\nLes mods BepInEx autonomes peuvent toujours fonctionner, mais ils n'apparaissent ici que s'ils s'enregistrent directement auprès du Framework ou incluent un pont de compatibilité avec le Framework.",
   "mods.optional": "facultatif",
+  "mods.report.copy": "Copier le rapport",
+  "mods.report.copied": "Copié",
   "mods.runtime": "Exécution",
   "mods.runtime.external": "Géré par le mod",
   "mods.runtime.live": "Activation en temps réel",

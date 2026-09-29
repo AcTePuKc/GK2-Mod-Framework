@@ -296,7 +296,7 @@ namespace GK2.Framework
             BuildRestartConfirmation(template, root);
 
             modList = new ModsMenuModList(listPanel, Select);
-            details = new ModsMenuDetails(detailPanel, template, ToggleSelected, OpenSettingsPage);
+            details = new ModsMenuDetails(detailPanel, template, ToggleSelected, OpenSettingsPage, CopyReport);
             settingsPage = new ModsMenuSettingsPage(panelRect, template, CloseSettingsPage);
         }
 
@@ -400,6 +400,21 @@ namespace GK2.Framework
             details.Show(mod);
             details.ConfigureGamepadNavigation(modList.GetNavigationItem(selectedId));
             FrameworkLog.Source?.LogInfo("GK2_MOD_SELECTED: " + (selectedId ?? "<none>"));
+        }
+
+        private void CopyReport()
+        {
+            if (selected == null) return;
+            try
+            {
+                GUIUtility.systemCopyBuffer = CompatibilityReport.Build(selected);
+                details.ReportCopied();
+                FrameworkLog.Source?.LogInfo("GK2_COMPAT_REPORT_COPIED: mod=" + selected.Metadata.Id);
+            }
+            catch (Exception ex)
+            {
+                FrameworkLog.Source?.LogWarning("GK2_COMPAT_REPORT_COPY_FAILED: " + ex.GetType().Name);
+            }
         }
 
         private void ToggleSelected()

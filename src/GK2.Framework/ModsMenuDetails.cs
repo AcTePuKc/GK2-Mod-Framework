@@ -14,8 +14,10 @@ namespace GK2.Framework
         private readonly TextMeshProUGUI enabledText;
         private readonly LazyButton enabledButton;
         private readonly LazyButton settingsButton;
+        private readonly LazyButton reportButton;
+        private readonly TextMeshProUGUI reportText;
 
-        internal ModsMenuDetails(Image panel, LazyButton template, Action toggleSelected, Action openSettings)
+        internal ModsMenuDetails(Image panel, LazyButton template, Action toggleSelected, Action openSettings, Action copyReport)
         {
             metadataText = FrameworkUi.CreateText(
                 "Metadata", panel.rectTransform, NativeUiSkin.IsReady ? 16f : 18f,
@@ -55,6 +57,20 @@ namespace GK2.Framework
             settingsButton.interactable = false;
             settingsButton.onClick.AddListener(() => openSettings());
             settingsButton.SetCallbacksIntoGamepadNavigationItem();
+
+            reportButton = FrameworkUi.CreateButton(
+                "CopyReport",
+                panel.rectTransform,
+                NativeUiSkin.IsReady ? null : template,
+                FrameworkUi.L("mods.report.copy", "Copy report"),
+                new Vector2(18f, 8f),
+                new Vector2(170f, 38f),
+                Vector2.zero,
+                Vector2.zero);
+            reportText = reportButton.GetComponentInChildren<TextMeshProUGUI>();
+            FrameworkUi.ApplyDialogButton(reportButton);
+            reportButton.onClick.AddListener(() => copyReport());
+            reportButton.SetCallbacksIntoGamepadNavigationItem();
         }
 
         internal void Show(RegisteredMod mod)
@@ -69,10 +85,13 @@ namespace GK2.Framework
                 enabledButton.interactable = false;
                 settingsButton.gameObject.SetActive(false);
                 settingsButton.interactable = false;
+                reportButton.gameObject.SetActive(false);
                 return;
             }
 
             settingsButton.gameObject.SetActive(true);
+            reportButton.gameObject.SetActive(true);
+            reportText.text = FrameworkUi.L("mods.report.copy", "Copy report");
 
             Gk2ModMetadata meta = mod.Metadata;
             ModUiState state = ModUiStateResolver.Get(mod);
@@ -138,18 +157,34 @@ namespace GK2.Framework
             settingsButton.interactable = mod.Settings.Items.Count > 0;
         }
 
+        internal void ReportCopied()
+        {
+            reportText.text = FrameworkUi.L("mods.report.copied", "Copied");
+        }
+
         internal void ConfigureGamepadNavigation(GamepadNavigationItem row)
         {
             if (row == null) return;
 
             GamepadNavigationItem enabledNav = enabledButton.GetComponent<GamepadNavigationItem>();
             GamepadNavigationItem settingsNav = settingsButton.GetComponent<GamepadNavigationItem>();
+            GamepadNavigationItem reportNav = reportButton.GetComponent<GamepadNavigationItem>();
             bool enabledAvailable = enabledNav != null
                 && enabledButton.gameObject.activeInHierarchy
                 && enabledButton.interactable;
             bool settingsAvailable = settingsNav != null
                 && settingsButton.gameObject.activeInHierarchy
                 && settingsButton.interactable;
+            bool reportAvailable = reportNav != null && reportButton.gameObject.activeInHierarchy;
+
+            if (reportAvailable)
+            {
+                reportNav.SetCustomDirectionItem(GUIDirection.Left, row);
+                reportNav.SetCustomDirectionItem(GUIDirection.Up,
+                    settingsAvailable ? settingsNav : enabledAvailable ? enabledNav : row);
+                if (enabledAvailable) enabledNav.SetCustomDirectionItem(GUIDirection.Down, reportNav);
+                if (settingsAvailable) settingsNav.SetCustomDirectionItem(GUIDirection.Down, reportNav);
+            }
 
             if (enabledAvailable)
             {
@@ -167,6 +202,10 @@ namespace GK2.Framework
             {
                 row.SetCustomDirectionItem(GUIDirection.Right, settingsNav);
                 settingsNav.SetCustomDirectionItem(GUIDirection.Left, row);
+            }
+            else if (reportAvailable)
+            {
+                row.SetCustomDirectionItem(GUIDirection.Right, reportNav);
             }
         }
 

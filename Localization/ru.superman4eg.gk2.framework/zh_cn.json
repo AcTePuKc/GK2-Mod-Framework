@@ -30,6 +30,8 @@
   "mods.next_start": "下次启动",
   "mods.none": "没有已注册并集成 Framework 的模组。\n\n独立的 BepInEx 模组仍可正常运行，但只有直接注册到 Framework 或包含 Framework 桥接组件时才会显示在这里。",
   "mods.optional": "可选",
+  "mods.report.copy": "复制报告",
+  "mods.report.copied": "已复制",
   "mods.runtime": "运行时",
   "mods.runtime.external": "由模组管理",
   "mods.runtime.live": "即时切换",

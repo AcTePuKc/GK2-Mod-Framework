@@ -1,4 +1,4 @@
-# GK2 Mod Framework 0.1.15
+# GK2 Mod Framework 0.1.16
 
 GK2 Mod Framework is a shared foundation for **Graveyard Keeper 2** code mods. It runs on BepInEx 5 and adds an in-game Mods menu, reusable settings, mod metadata, dependency checks, lifecycle events, and game-build compatibility reporting.
 
@@ -44,6 +44,7 @@ To uninstall, close the game and remove `BepInEx/plugins/GK2.Framework.dll` and 
 - Framework window scale from 50% to 100% available directly in the Framework Settings UI
 - Installed framework mod list and detailed metadata
 - Compatibility and dependency status
+- **Copy report** on a selected mod copies its version, current compatibility status, game and Unity versions, and game assembly fingerprint for support requests. Review the clipboard text before sharing it.
 - Opt-in structural compatibility checks so validated mods can survive unrelated game updates without waiting for a new whole-assembly fingerprint
 - Runtime enable/disable for mods that explicitly support it
 - Restart-required state for mods that cannot be toggled safely at runtime
@@ -74,6 +75,7 @@ Use `Gk2ModContext.Settings` during `OnRegister` to create BepInEx-backed settin
 ## Compatibility and known limitations
 
 - Whole-assembly fingerprints are verified for full-release Steam builds `25457344`, `25467846`, and `25506711`, Unity `6000.3.9f1`, Mono x64. Framework 0.1.11's targeted unknown-build path was runtime-tested on Steam build `25509347` and again on build `25533739` (Assembly-CSharp SHA-256 `7ACB243A08897D8CC7B67EF17AED50EEA17857494AEF4278F4F3B00D324823E5`): the global fingerprint remained `Unknown`, while current consumer mods that validate their structural contracts registered `Compatible`.
+- Framework 0.1.16 menu startup and Copy report were tested on Steam build `25601286` (Assembly-CSharp SHA-256 `37A17C02B53F9BF62ABE76398CED3BCB847774EB5AC12353CF32D8B6044E1134`). The global build fingerprint remains `Unknown`; this focused check does not establish full compatibility for every mod on that build.
 - Backward compatibility was also rechecked on Demo build `25344626`.
 - Mouse/physical-keyboard input is verified, including visible caret/edit state for text and exact numeric fields. Gamepad-mode navigation is runtime-tested from the mod list through per-mod Settings controls, including toggles, sliders, exact numeric entry, dropdowns, keybinds, text entry, action buttons, per-row Reset paths, Reset/rebuild focus, conditional hidden/disabled rows, Settings-page return focus, and the scaled `1600x900` path. Text and numeric entry from a controller uses a Framework-owned on-screen keyboard with commit/cancel and focus restoration, so it does not depend on Steam Overlay. The controller keyboard currently provides a Latin text layout; entering text in other writing systems requires a physical keyboard. Automated probes use the game's real navigation controller/input mode, and the 0.1.13 controller keyboard/settings path also passed owner physical-controller testing; broader device/mapping coverage remains useful.
 - Responsive fitting is runtime-tested at `1600x900`; fit calculations are also regression-tested for `1366x768`, `1280x720`, `1920x1080`, and `3840x2160`.

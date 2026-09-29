@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.16 — 2026-09-29
+
+- Fixed a harmless Unity startup error when the main-menu Mods button was injected before its window became active. The button behavior is unchanged.
+- Added a localized **Copy report** button for the selected mod. It copies the Framework and mod versions, game build fingerprint, current compatibility status and detail, and the relative log location for support requests.
+
 ## 0.1.15 — 2026-09-28
 
 - Added a complete German (`de`) translation for the Framework Mods menu and settings.
