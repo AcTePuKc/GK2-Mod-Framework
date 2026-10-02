@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added public `Gk2Settings` overloads that adopt an existing BepInEx `ConfigEntry<T>` for supported native controls. Optional bridges can now expose a standalone mod's original configuration in the Mods menu without binding a duplicate entry.
+- Added validation for adopted entries: they must belong to the `ConfigFile` registered for that mod and cannot register the same `Section.Key` twice.
+- Accepted common SemVer prerelease and build suffixes in Framework metadata and dependency version inputs; Framework comparisons continue to use the numeric `System.Version` core.
+
 ## 0.1.16 — 2026-09-29
 
 - Fixed a harmless Unity startup error when the main-menu Mods button was injected before its window became active. The button behavior is unchanged.
